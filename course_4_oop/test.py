@@ -1,17 +1,12 @@
-def get_choices():
-    player_choice = input("Enter a choice rock, paper, scissors: ")
-    computer_choice = "paper"
+with open("test.txt", "r") as fp:
+    lines = fp.readlines()
 
-    choices = {"player": player_choice, "computer": computer_choice}
-
-    return choices
-
-
-choices = get_choices()
-# print(choices)
-
-
-i = 1
-while (i < 3):
-    print(i)
-    i += 1
+with open("new_file.txt", "w") as fp:
+    count = 0
+    for line in lines:
+        if count == 4:
+            count += 1
+            continue
+        else:
+            fp.write(line)
+            count += 1
