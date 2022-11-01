@@ -21,19 +21,25 @@ class Hall(Star_Cinema):
             self.rows)]for j in range(self.cols)]
 
     def book_seats(self, customer_name, ph_no, id):
-        tup_list = [(self.seats[id])]
+        tup_list = [(0,0),(0,1),(0,2),(0,3),(0,4)]
         booked = 1
-        for i, v in self.seats.items():
-            if i == id:
-                for row, col in enumerate(v):
-                    for tup_row, tup_col in enumerate(tup_list):
-                        if v[tup_row[row]][tup_col[col]] != 'Empty':
-                            print('Seats Already Booked')
-                            break
-                        else:
-                            v[tup_row[row]][tup_col[col]] = customer_name
-                    break
-                break
+        for i in range(len(tup_list)):
+            print(tup_list[i])
+            row = tup_list[i][0]
+            col = tup_list[i][1]
+            self.seats[id][row][col] = "changed"
+        print(self.seats[id])
+        
+        row = 0
+        col = 0
+
+        d = {"jey", 22}
+        print(d[0])
+
+        
+
+
+            
 
     def view_show_list(self):
         for show in self.show_list:
@@ -49,5 +55,5 @@ class Hall(Star_Cinema):
 
 cinema = Hall(5, 3, "A10")
 cinema.entry_show("Black Adam", "ae122", "10pm")
-cinema.view_available_seats()
+# cinema.view_available_seats("ae122")
 cinema.book_seats("limon", 544, "ae122")
