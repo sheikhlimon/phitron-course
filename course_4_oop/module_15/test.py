@@ -22,16 +22,14 @@ class Hall(Star_Cinema):
  
     def book_seats(self, customer_name, ph_no, id):
         tup_list = [(0, 0)]
-        for i, v in self.seats.items():
-            if i == id:
-                for i2, v2 in enumerate(v):
-                    for i3, v3 in enumerate(tup_list):
-                        if v[v3[0]][v3[1]] != 'Empty':
-                            print('Seats Alreday Booked')
-                            break
-                        else:
-                            v[v3[0]][v3[1]] = customer_name
-                    break
+        for key, value in self.seats.items():
+            if key == id:
+                for elem in tup_list:
+                    if value[elem[0]][elem[1]] != 'Empty':
+                        print('Seats Alreday Booked')
+                        break
+                    else:
+                        value[elem[0]][elem[1]] = customer_name
                 break
  
     def view_show_list(self):

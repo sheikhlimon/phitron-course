@@ -7,6 +7,7 @@ def book(seat):
     # Convert each seat character to integer.
     row = letter_to_index[seat[0]]
     col = digit_to_index[seat[1]]
+    print(x[row][col])
 
     if x[row][col] == BOOKED:
         return False

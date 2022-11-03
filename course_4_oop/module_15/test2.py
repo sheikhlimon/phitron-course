@@ -17,29 +17,24 @@ class Hall(Star_Cinema):
 
     def entry_show(self, movie_name, id, time):
         self.show_list.append((id, movie_name, time))
-        self.seats[id] = [['empty' for i in range(
-            self.rows)]for j in range(self.cols)]
+        # self.seats[id] = [['empty' for i in range(
+        # self.rows)]for j in range(self.cols)]
+        self.seats[id] = [[0]*self.rows]*self.cols
 
-    def book_seats(self, customer_name, ph_no, id):
-        tup_list = [(0,0),(0,1),(0,2),(0,3),(0,4)]
-        booked = 1
-        for i in range(len(tup_list)):
-            print(tup_list[i])
-            row = tup_list[i][0]
-            col = tup_list[i][1]
-            self.seats[id][row][col] = "changed"
-        print(self.seats[id])
+    def book_seats(self, customer_name, ph_no, id, tup_list):
+        # letter_to_index = {"A": 0, "B": 1, "C": 2}
+        # digit_to_index = {"1": 0, "2": 1, "3": 2, "4": 3, "5": 4}
+        arr = self.seats[id]
         
-        row = 0
-        col = 0
+        # arr = [[72, 85, 87, 90, 69], [80, 87, 65, 89, 85], [96, 91, 70, 78, 97]]
 
-        d = {"jey", 22}
-        print(d[0])
+        print(arr)
+        for value in range(len(arr)):
+            for i in range(value):
+                print(i[0]) 
 
+                
         
-
-
-            
 
     def view_show_list(self):
         for show in self.show_list:
@@ -50,10 +45,11 @@ class Hall(Star_Cinema):
         for key, val in self.seats.items():
             if key == id:
                 for seat in val:
-                    print('\t'.join(map(str, seat)))
+                    print('\tseat')
 
 
 cinema = Hall(5, 3, "A10")
 cinema.entry_show("Black Adam", "ae122", "10pm")
 # cinema.view_available_seats("ae122")
-cinema.book_seats("limon", 544, "ae122")
+tup_list = [(0, 0)]
+cinema.book_seats("limon", 86876, "ae122", [tup_list])

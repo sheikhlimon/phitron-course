@@ -20,28 +20,28 @@ class Hall(Star_Cinema):
         self.__id = id
         self.__time = time
         self.__show_list.append((id, movie_name, time))
-        self.__seats[id] = [[False for i in range(
-            self.__rows)]for j in range(self.__cols)]
+        self.__seats[id] = [[0]*self.__rows]*self.__cols
 
     def book_seats(self, customer_name, ph_no, id, tup_list):
         for key, value in self.__seats.items():
             if key == id:
-                for row, col in enumerate(value):
-                    for tup_row, tup_col in enumerate(tup_list):
-                        if value[tup_col[0]][tup_col[1]] != False:
-                            print('\nSeats Alreday Booked')
-                            break
-                        else:
-                            value[tup_col[0]][tup_col[1]] = 'X'
-                            print(
-                                f"\n{'#'*5} Ticket Booked Successfully! {'#'*5}\n{'-'*50}")
-                            print(
-                                f"\nName: {customer_name}\nPhone Number: {ph_no}\n")
-                            print(
-                                f"Movie Name: {self.__movie_name}\t\t Movie Time: {self.__time}")
-                            print(f"Tickets: {tup_list}")
-                            print(f"Hall: {self.__hall_no}\n\n{'-'*50}")
-                    break
+                for item in tup_list:
+                    elm1 = item[0]
+                    elm2 = item[1]
+                    print(elm1, elm2)
+                    if value[elm1][elm2] != False:
+                        print('\nSeats Alreday Booked\n')
+                        break
+                    else:
+                        value[elm1][elm2] = 'X'
+                        print(
+                            f"\n\t{'#'*5} Ticket Booked Successfully! {'#'*5}\n{'-'*50}")
+                        print(
+                            f"\nName: {customer_name}\nPhone Number: {ph_no}\n")
+                        print(
+                            f"Movie Name: {self.__movie_name}\t\t Movie Time: {self.__time}")
+                        print(f"Tickets: {tup_list}")
+                        print(f"Hall: {self.__hall_no}\n\n{'-'*50}")
                 break
 
     def view_show_list(self):
@@ -52,11 +52,14 @@ class Hall(Star_Cinema):
     def view_available_seats(self, id):
         for key, val in self.__seats.items():
             if key == id:
-                print(f"Movie Name: {self.__movie_name}\t\t Movie Time: {self.__time}")
+                print(
+                    f"\nMovie Name: {self.__movie_name}\t\t Movie Time: {self.__time}")
                 print(f"X for already booked seats\n{'-'*50}")
                 for seat in val:
-                    print('\t'.join(map(str, seat)))
-                print(f"{'-'*50}")
+                    for i, item in enumerate(seat):
+                        print('\t', i,item, end=" ")
+                    print()
+                print(f"{'-'*50}\n")
 
 
 cinema = Hall(5, 3, "A10")
@@ -74,10 +77,12 @@ while True:
         print("\n")
     elif user_input == "2":
         id = input("ENTER SHOW ID: ")
-        print("\n")
-        cinema.view_available_seats(id)
-        # print('-'*50)
-        print("\n")
+        flag = 0
+        if id != cinema.view_available_seats(id):
+            print("\nWrong ID\n")
+            flag = 1
+        if flag:
+            cinema.view_available_seats(id)
 
     elif user_input == "3":
         customer = input("ENTER CUSTOMER NAME: ")
@@ -90,6 +95,3 @@ while True:
             col = int(input("Col: "))
             tup_list = (row, col)
             cinema.book_seats(customer, phone, show_id, [tup_list])
-
-#id matching 
-#seat problem
