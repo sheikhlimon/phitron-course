@@ -16,11 +16,9 @@ class Hall(Star_Cinema):
         super().entry_hall(self)
 
     def entry_show(self, movie_name, id, time):
-        self.__movie_name = movie_name
-        self.__id = id
-        self.__time = time
-        self.__show_list.append((id, movie_name, time))
-        self.__seats[id] = [[0]*self.__rows]*self.__cols
+        self.__show_list.append((movie_name, id, time))
+        self.__seats[id] = [[f"{chr(65+j)}{i}" for i in range(self.__rows)]for j in range(self.__cols)]
+        print(self.__seats[id])
 
     def book_seats(self, customer_name, ph_no, id, tup_list):
         for key, value in self.__seats.items():
@@ -28,38 +26,41 @@ class Hall(Star_Cinema):
                 for item in tup_list:
                     elm1 = item[0]
                     elm2 = item[1]
-                    print(elm1, elm2)
-                    if value[elm1][elm2] != False:
+                    if value[elm1][elm2] == 'X':
                         print('\nSeats Alreday Booked\n')
                         break
                     else:
                         value[elm1][elm2] = 'X'
-                        print(
-                            f"\n\t{'#'*5} Ticket Booked Successfully! {'#'*5}\n{'-'*50}")
-                        print(
-                            f"\nName: {customer_name}\nPhone Number: {ph_no}\n")
-                        print(
-                            f"Movie Name: {self.__movie_name}\t\t Movie Time: {self.__time}")
+                        print(f"\n\t{'#'*5} Ticket Booked Successfully! {'#'*5}\n{'-'*50}")
+                        print(f"\nName: {customer_name}\nPhone Number: {ph_no}")
+                        self.__show_mov_name_time(id)
                         print(f"Tickets: {tup_list}")
                         print(f"Hall: {self.__hall_no}\n\n{'-'*50}")
+                        break
                 break
 
     def view_show_list(self):
         for show in self.__show_list:
             print(
-                f"Movie Name: {show[1]}\t Show ID: {show[0]}\t Time:{show[2]}")
+                f"Movie Name: {show[0]}\t Show ID: {show[1]}\t Time:{show[2]}")
+
+    def __show_mov_name_time(self, id):
+        for show in self.__show_list:
+            if id == show[1]:
+                print(f"\nMovie Name: {show[0]}\t\t Movie Time:{show[2]}")
+                break
 
     def view_available_seats(self, id):
         for key, val in self.__seats.items():
             if key == id:
-                print(
-                    f"\nMovie Name: {self.__movie_name}\t\t Movie Time: {self.__time}")
+                self.__show_mov_name_time(id)
                 print(f"X for already booked seats\n{'-'*50}")
                 for seat in val:
-                    for i, item in enumerate(seat):
-                        print('\t', i,item, end=" ")
+                    for item in seat:
+                        print('\t', item, end=" ")
                     print()
                 print(f"{'-'*50}\n")
+                break
 
 
 cinema = Hall(5, 3, "A10")
@@ -77,12 +78,7 @@ while True:
         print("\n")
     elif user_input == "2":
         id = input("ENTER SHOW ID: ")
-        flag = 0
-        if id != cinema.view_available_seats(id):
-            print("\nWrong ID\n")
-            flag = 1
-        if flag:
-            cinema.view_available_seats(id)
+        cinema.view_available_seats(id)
 
     elif user_input == "3":
         customer = input("ENTER CUSTOMER NAME: ")
@@ -90,8 +86,8 @@ while True:
         show_id = input("ENTER SHOW ID: ")
         ticket = int(input("ENTER NUMBER OF TICKETS: "))
         for i in range(ticket):
-            # input("ENTER SEAT NUMBER: ")
-            row = int(input("Row: "))
-            col = int(input("Col: "))
+            seat = input("ENTER SEAT NUMBER: ")
+            row = ord(seat[0])-65
+            col = int(seat[1])
             tup_list = (row, col)
             cinema.book_seats(customer, phone, show_id, [tup_list])
