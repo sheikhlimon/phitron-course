@@ -1,8 +1,9 @@
 import hashlib
-from random import random, randint
+from random import random, randint, choice
 from brta import BRTA
 from vehicles import Bike, Car, Cng
 from ride_manager import uber
+import threading
 
 
 class UserAlreadyExists(Exception):
@@ -112,7 +113,11 @@ class Driver(User):
     def start_a_trip(self, start, destination, fare, trip_info):
         self.earning += fare
         self.location = destination
-        self.vehicle.start_driving(start, destination)
+        # start thread
+        trip_thread = threading.Thread(
+            target=self.vehicle.start_driving, args=(start, destination))
+        trip_thread.start()
+        # self.vehicle.start_driving(start, destination)
         self.__trip_history.append(trip_info)
 
 
@@ -122,19 +127,22 @@ rider3 = Rider('rider3', 'rider3@gmail.com', 'rider3', randint(0, 30), 5000)
 rider4 = Rider('rider4', 'rider4@gmail.com', 'rider4', randint(0, 30), 5000)
 rider5 = Rider('rider5', 'rider5@gmail.com', 'rider5', randint(0, 30), 5000)
 
+vehicle_types = ['car', 'bike', 'cng']
+
 for i in range(1, 100):
     driver1 = Driver(f'driver{i}', f'driver{i}@gmail.com',
                      f'driver{i}', randint(0, 100), randint(1000, 9999))
     driver1.take_driving_test()
-    driver1.register_a_vehicle('car', randint(10000, 99999), 10)
+    driver1.register_a_vehicle(
+        choice(vehicle_types), randint(10000, 99999), 10)
 
 
 print(uber.get_available_cars())
-uber.find_a_vehicle(rider1, 'car', randint(1, 100))
-uber.find_a_vehicle(rider2, 'car', randint(1, 100))
-uber.find_a_vehicle(rider3, 'car', randint(1, 100))
-# uber.find_a_vehicle(rider4, 'car', randint(1, 100))
-# uber.find_a_vehicle(rider5, 'car', randint(1, 100))
+uber.find_a_vehicle(rider1, choice(vehicle_types), randint(1, 100))
+uber.find_a_vehicle(rider2, choice(vehicle_types), randint(1, 100))
+uber.find_a_vehicle(rider3, choice(vehicle_types), randint(1, 100))
+uber.find_a_vehicle(rider4, choice(vehicle_types), randint(1, 100))
+uber.find_a_vehicle(rider5, choice(vehicle_types), randint(1, 100))
 
 print(rider1.get_trip_history())
 print(uber.total_income())
