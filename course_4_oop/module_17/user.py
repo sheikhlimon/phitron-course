@@ -1,5 +1,5 @@
 import hashlib
-from random import random, randint, choice
+from random import randint, choice
 from brta import BRTA
 from vehicles import Bike, Car, Cng
 from ride_manager import uber
