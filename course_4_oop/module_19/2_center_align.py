@@ -1,6 +1,4 @@
-# with open('center.txt') as file:
-#     lines = []
-#     for line in file:
-#         lines.append(line)
-#         print(line.center(15)) 
-
+with open('center.txt', 'r') as file:
+    lines = file.readlines()
+    for line in lines:
+        print(line.center(50))

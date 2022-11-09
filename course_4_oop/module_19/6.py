@@ -3,7 +3,6 @@ def dp(l1, l2):
         return ll1[n] * ll2[n]
     r = 0
     for i in range(len(l1)):
-        print(l1, l2, i)
         r += p(l1, l2, i)
     return r
 
