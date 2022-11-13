@@ -15,3 +15,9 @@ DAC DUB LON IST PAR NYC KAT
 
 
 '''
+
+from itertools import permutations
+
+list = [ 1, 2, 3 ]
+for i in permutations(list):
+    print(i)
