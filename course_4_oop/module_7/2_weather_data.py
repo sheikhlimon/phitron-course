@@ -7,4 +7,4 @@ while True:
     data = response_API.text
     parse_json = json.loads(data)
     print(parse_json)
-    sleep(1800)
+    sleep(1)

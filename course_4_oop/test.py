@@ -1,12 +1,15 @@
-with open("test.txt", "r") as fp:
-    lines = fp.readlines()
+str1 = "James"
 
-with open("new_file.txt", "w") as fp:
-    count = 0
-    for line in lines:
-        if count == 4:
-            count += 1
-            continue
-        else:
-            fp.write(line)
-            count += 1
+# res = str1[0]
+
+# l = len(str1)
+
+# mi = int(l/2)
+
+# res= res + str1[mi]
+
+# res = res + str1[l-1]
+
+
+print(str1[0:-1:2])
+print(str1[-1])
